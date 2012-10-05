@@ -11,8 +11,6 @@
 
 
 // util functions
-//
-
 
 function bindEvent(element, type, handler) {
    if(element.addEventListener) {
@@ -42,13 +40,17 @@ addCss(css_code);
 // prepare elements
 
 var note_header = document.getElementsByClassName('note-header')[0];
+
 var note = note_header.parentNode;
+
 var flip_container = (function() {
+    // clone should be done before any changes made on note (like add flip_button)
     var e = note.cloneNode(true);
     e.setAttribute('class', 'container');
     e.removeAttribute('id');
     return e;
 })();
+
 var flip = (function() {
     var e = document.createElement('div');
     e.appendChild(flip_container);
@@ -57,56 +59,75 @@ var flip = (function() {
     return e;
 })();
 
-// create & bind & insert flip button
-
 var flip_button = (function() {
     var e = document.createElement('div');
     e.setAttribute('id', 'dbflip_flip_button');
     e.appendChild(document.createTextNode('Flip'));
     e.appendChild(document.createElement('br'));
     e.appendChild(document.createTextNode('←'));
+    note_header.appendChild(e);
     return e;
 })();
 
-note_header.appendChild(flip_button);
+var copied_paginator = document.getElementsByClassName('paginator')[0].cloneNode(true);
 
-FLIP_INITED = false;
+// ui functions
 
-var init_flip = function() {
-    // close button
+var open_flip = function() {
+    note.style.display = 'none';
+    flip.style.display = 'block';
+    copied_paginator.style.display = 'block';
+}
+
+var close_flip = function() {
+    note.style.display = 'block';
+    flip.style.display = 'none';
+    copied_paginator.style.display = 'none';
+}
+
+// initial event
+
+INITED = false;
+
+var init = function() {
+    // close_button <- onclick close_flip()
     var close_button = (function() {
         var e = document.createElement('div');
         e.setAttribute('id', 'dbflip_close_button');
         e.appendChild(document.createTextNode('Close'));
         e.appendChild(document.createElement('br'));
         e.appendChild(document.createTextNode('→'));
+
+        bindEvent(e, 'click', function() {
+            close_flip();
+        });
+
         return e;
     })();
-    // close button showing trigger
+
+    // close_button_trigger -> flip_container
     var close_button_trigger = (function() {
         var e = document.createElement('div');
         e.setAttribute('id', 'dbflip_close_button_trigger');
         e.appendChild(close_button);
+
+        flip_container.appendChild(e);
+
         return e;
     })();
 
-    flip_container.appendChild(close_button_trigger);
-
-    bindEvent(close_button, 'click', function() {
-        note.style.display = 'block';
-        flip.style.display = 'none';
-    });
+    // paginator -> before comments
+    var comments = document.getElementById('comments');
+    comments.parentNode.insertBefore(copied_paginator, comments);
 
     document.body.appendChild(flip);
-    FLIP_INITED = true;
+    INITED = true;
 }
 
 bindEvent(flip_button, 'click', function() {
-    if (!FLIP_INITED) {
-        init_flip();
+    if (!INITED) {
+        init();
     }
-    note.style.display = 'none';
-    flip.style.display = 'block';
-
+    open_flip();
 });
 
