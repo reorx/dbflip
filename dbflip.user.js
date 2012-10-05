@@ -69,20 +69,24 @@ var flip_button = (function() {
     return e;
 })();
 
-var copied_paginator = document.getElementsByClassName('paginator')[0].cloneNode(true);
+var copied_paginator = undefined;
+if (document.getElementsByClassName('paginator').length > 0)
+    var copied_paginator = document.getElementsByClassName('paginator')[0].cloneNode(true);
 
 // ui functions
 
 var open_flip = function() {
     note.style.display = 'none';
     flip.style.display = 'block';
-    copied_paginator.style.display = 'block';
+    if (copied_paginator)
+        copied_paginator.style.display = 'block';
 }
 
 var close_flip = function() {
     note.style.display = 'block';
     flip.style.display = 'none';
-    copied_paginator.style.display = 'none';
+    if (copied_paginator)
+        copied_paginator.style.display = 'none';
 }
 
 // initial event
@@ -117,8 +121,10 @@ var init = function() {
     })();
 
     // paginator -> before comments
-    var comments = document.getElementById('comments');
-    comments.parentNode.insertBefore(copied_paginator, comments);
+    if (copied_paginator) {
+        var comments = document.getElementById('comments');
+        comments.parentNode.insertBefore(copied_paginator, comments);
+    }
 
     document.body.appendChild(flip);
     INITED = true;
