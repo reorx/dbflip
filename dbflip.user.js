@@ -5,7 +5,6 @@
 // @author         reorx
 // @license        GNU GPL v3 (http://www.gnu.org/copyleft/gpl.html) 
 // @version        0.1
-// @require
 // @include        http://www.douban.com/note/*
 // ==/UserScript==
 
