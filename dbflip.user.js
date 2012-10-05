@@ -35,11 +35,12 @@ function addCss(cssCode) {
 
 // add css
 main_style_code = "" +
-"#dbflip_close_button{width:60px;height:50px;line-height:20px;padding-top:10px;text-align:center;background:#ddd;border-radius:0 8px 8px 0;margin-top:-30px;opacity:.1;position:fixed;right:780px;top:50%;z-index:999;color:#333;cursor:pointer}#dbflip_close_button_trigger{height:100%;left:-40px;position:absolute;top:0;width:60px}#dbflip_close_button_trigger:hover>div{opacity:.6}#dbflip_close_button:hover{background:#ccc;color:#111}#dbflip_flip{background:#F6F6F6;box-shadow:0 0 15px 0 #CCC;height:100%;overflow-y:auto;position:fixed;right:0;top:0;width:840px;z-index:99}#dbflip_flip .container{margin:40px;position:relative}#dbflip_flip .note{font-family:'Helvetica Neue',Helvetica,Arial,'Hiragino Sans GB','WenQuanYi Micro Hei','Microsoft YaHei',sans-serif;font-size:16px;line-height:33px;margin-top:40px}#dbflip_flip .note-header{margin-top:60px}#dbflip_flip .note br{line-height:50px}#dbflip_flip .pl{color:#C8CDD2}#dbflip_flip h1{color:#323C46;font-size:28px;font-weight:bold}#dbflip_flip_button,#dbflip_close_button{}#dbflip_flip_button{position:absolute;right:0;top:0;width:40px;cursor:pointer;text-align:center;border-left:1px solid #329732;border-bottom:1px solid #329732;color:#329732}#dbflip_flip_button:hover{background:#329732;color:#fff}.note-header{position:relative}#comments{overflow:visible}.comment-item:hover{position:relative;z-index:100;background:white;box-shadow:0 3px 3px 0 #aaa}";
+"#dbflip_close_button{width:60px;height:50px;line-height:20px;padding-top:10px;text-align:center;background:#ddd;border-radius:0 8px 8px 0;margin-top:-30px;opacity:.1;position:fixed;right:780px;top:50%;z-index:999;color:#333;cursor:pointer}#dbflip_close_button_trigger{height:100%;left:-40px;position:absolute;top:0;width:60px}#dbflip_close_button_trigger:hover>div{opacity:.6}#dbflip_close_button:hover{background:#ccc;color:#111}#dbflip_flip{background:#F6F6F6;box-shadow:0 0 15px 0 #CCC;height:100%;overflow-y:auto;position:fixed;right:0;top:0;width:840px;z-index:99}#dbflip_flip .container{margin:40px;position:relative}#dbflip_flip .note{font-family:'Helvetica Neue',Helvetica,Arial,'Hiragino Sans GB','WenQuanYi Micro Hei','Microsoft YaHei',sans-serif;font-size:16px;line-height:33px;margin-top:40px}#dbflip_flip .note-header{margin-top:60px}#dbflip_flip .note br{line-height:50px}#dbflip_flip .pl{color:#C8CDD2}#dbflip_flip h1{color:#323C46;font-size:28px;font-weight:bold}#dbflip_flip_button,#dbflip_close_button{}#dbflip_flip_button{position:absolute;right:0;top:0;width:40px;cursor:pointer;text-align:center;border-left:1px solid #329732;border-bottom:1px solid #329732;color:#329732}#dbflip_flip_button:hover{background:#329732;color:#fff}.note-header{position:relative}";
 
 main_style = addCss(main_style_code);
 
-toggle_style_code = "";
+toggle_style_code = "" +
+"#comments{overflow:visible}.comment-item:hover{position:relative;z-index:100;background:white;box-shadow:0 3px 3px 0 #aaa}";
 
 toggle_style = addCss(toggle_style_code);
 
@@ -82,6 +83,7 @@ if (document.getElementsByClassName('paginator').length > 0)
 // ui functions
 
 var open_flip = function() {
+    toggle_style.disabled = false;
     note.style.display = 'none';
     flip.style.display = 'block';
     if (copied_paginator)
@@ -89,6 +91,7 @@ var open_flip = function() {
 }
 
 var close_flip = function() {
+    toggle_style.disabled = true;
     note.style.display = 'block';
     flip.style.display = 'none';
     if (copied_paginator)
