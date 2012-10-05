@@ -1,0 +1,10 @@
+#comments {
+    overflow: visible;
+}
+
+.comment-item:hover {
+    position: relative;
+    z-index: 100;
+    background: white;
+    box-shadow: 0 3px 3px 0 #aaa;
+}
