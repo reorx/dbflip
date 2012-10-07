@@ -10,3 +10,5 @@ Enhance article readability on douban.com.
 - add auto flip toggle button.
 
 - fit douban design style.
+
+- add settings: ajax load comments
